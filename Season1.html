@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Last Cartographer — Complete Edition</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --ink: #1a1208;
+            --paper: #f6eedd;
+            --paper2: #ede2c8;
+            --paper3: #e4d8bb;
+            --aged: #c4955a;
+            --rust: #8b3a2a;
+            --dim: #7a6245;
+            --night: #0e0905;
+            --nt: #cbb990;
+            --nd: #8a7255;
+            --teal: #1a5c5a;
+            --gold: #b8860b;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--night);
+            font-family: 'EB Garamond', Georgia, serif;
+            color: var(--ink);
+            overflow-x: hidden
+        }
+
+        /* ══ COVER ══ */
+        #cover {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 50% 55%, #2d1f0e 0%, #0e0905 65%, #000 100%);
+            cursor: pointer;
+            user-select: none
+        }
+
+        #stars {
+            position: absolute;
+            inset: 0;
+            pointer-events: none
+        }
+
+        .star {
+            position: absolute;
+            background: #f5edd8;
+            border-radius: 50%;
+            animation: twinkle var(--d, 3s) infinite ease-in-out var(--delay, 0s)
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: var(--lo, .2);
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: var(--hi, .9);
+                transform: scale(1.4)
+            }
+        }
+
+        .cover-compass {
+            width: clamp(70px, 10vw, 110px);
+            height: clamp(70px, 10vw, 110px);
+            border: 1.5px solid var(--aged);
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            position: relative;
+            animation: fadeUp .9s ease .1s both, rotateSlow 35s linear infinite
+        }
+
+        .cover-compass::before,
+        .cover-compass::after {
+            content: '';
+            position: absolute;
+            background: var(--aged)
+        }
+
+        .cover-compass::before {
+            top: 50%;
+            left: 50%;
+            width: 60%;
+            height: 1px;
+            transform: translate(-50%, -50%)
+        }
+
+        .cover-compass::after {
+            top: 50%;
+            left: 50%;
+            height: 60%;
+            width: 1px;
+            transform: translate(-50%, -50%)
+        }
+
+        .cover-compass span {
+            position: absolute;
+            font-family: 'EB Garamond', serif;
+            font-size: .65rem;
+            color: var(--aged);
+            letter-spacing: .05em
+        }
+
+        .cover-compass span.n {
+            top: 6%;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        .cover-compass span.s {
+            bottom: 6%;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        .cover-compass span.e {
+            right: 7%;
+            top: 50%;
+            transform: translateY(-50%)
+        }
+
+        .cover-compass span.w {
+            left: 7%;
+            top: 50%;
+            transform: translateY(-50%)
+        }
+
+        @keyframes rotateSlow {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .cover-eyebrow {
+            font-family: 'EB Garamond', serif;
+            font-size: .72rem;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--aged);
+            margin-bottom: .9rem;
+            animation: fadeUp .9s ease .2s both
+        }
+
+        .cover-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 9vw, 6.2rem);
+            font-weight: 700;
+            color: var(--paper);
+            text-align: center;
+            line-height: 1.08;
+            text-shadow: 0 0 80px rgba(196, 149, 90, .35);
+            animation: fadeUp 1.1s ease .3s both
+        }
+
+        .cover-sub {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: clamp(.95rem, 2vw, 1.25rem);
+            color: var(--nd);
+            margin-top: .8rem;
+            animation: fadeUp 1s ease .6s both
+        }
+
+        .cover-edition {
+            font-size: .7rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: rgba(196, 149, 90, .5);
+            margin-top: .5rem;
+            animation: fadeUp 1s ease .7s both
+        }
+
+        .cover-rule {
+            width: clamp(60px, 15vw, 120px);
+            height: 1px;
+            background: var(--aged);
+            margin: 2rem auto;
+            opacity: .5;
+            animation: fadeUp 1s ease .75s both
+        }
+
+        .cover-cta {
+            font-size: .75rem;
+            letter-spacing: .35em;
+            color: var(--nd);
+            text-transform: uppercase;
+            animation: fadeUp .8s ease 1s both, blink 2.4s ease-in-out 1.8s infinite
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: .35
+            }
+
+            50% {
+                opacity: .85
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* ══ TABLE OF CONTENTS ══ */
+        #toc-screen {
+            display: none;
+            min-height: 100vh;
+            background: #12100a;
+            padding: 4rem 1.5rem;
+            justify-content: center
+        }
+
+        #toc-screen.show {
+            display: flex
+        }
+
+        .toc-inner {
+            max-width: 640px;
+            width: 100%
+        }
+
+        .toc-header {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 4vw, 2.4rem);
+            color: var(--nt);
+            margin-bottom: .5rem
+        }
+
+        .toc-sub {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: .95rem;
+            color: var(--nd);
+            margin-bottom: 2.5rem;
+            letter-spacing: .05em
+        }
+
+        .toc-rule {
+            height: 1px;
+            background: rgba(196, 149, 90, .2);
+            margin-bottom: 2rem
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            padding: .65rem 0;
+            border-bottom: 1px solid rgba(196, 149, 90, .1);
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .toc-item:hover .toc-ch-title {
+            color: var(--aged)
+        }
+
+        .toc-num {
+            font-family: 'EB Garamond', serif;
+            font-size: .7rem;
+            letter-spacing: .3em;
+            color: var(--nd);
+            text-transform: uppercase;
+            min-width: 80px
+        }
+
+        .toc-ch-title {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: rgba(203, 185, 144, .7);
+            transition: color .2s;
+            flex: 1
+        }
+
+        .toc-start-btn {
+            margin-top: 2.5rem;
+            font-family: 'EB Garamond', serif;
+            font-size: .82rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--aged);
+            background: none;
+            border: 1px solid rgba(196, 149, 90, .4);
+            padding: .7rem 2rem;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all .2s;
+            display: block;
+            width: 100%
+        }
+
+        .toc-start-btn:hover {
+            background: rgba(196, 149, 90, .1);
+            border-color: var(--aged)
+        }
+
+        /* ══ STORY ══ */
+        #story {
+            display: none
+        }
+
+        .chapter-page {
+            min-height: 100vh;
+            padding: 5rem 1.5rem 8rem;
+            display: flex;
+            justify-content: center;
+            position: relative
+        }
+
+        .chapter-page.bg1 {
+            background: var(--paper)
+        }
+
+        .chapter-page.bg2 {
+            background: var(--paper2)
+        }
+
+        .chapter-page.bg3 {
+            background: var(--paper3)
+        }
+
+        .chapter-page.dark {
+            background: #12100a
+        }
+
+        .chapter-page.dark2 {
+            background: #0a0f0e
+        }
+
+        .chapter-page.dark3 {
+            background: #0f0c0a
+        }
+
+        .page-inner {
+            max-width: 700px;
+            width: 100%
+        }
+
+        /* Chapter header */
+        .ch-number {
+            font-size: .7rem;
+            letter-spacing: .38em;
+            text-transform: uppercase;
+            color: var(--rust);
+            margin-bottom: .7rem;
+            font-family: 'EB Garamond', serif
+        }
+
+        .ch-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.9rem, 5vw, 3.1rem);
+            font-weight: 700;
+            line-height: 1.12;
+            margin-bottom: 2rem;
+            color: var(--ink);
+            border-bottom: 1.5px solid var(--aged);
+            padding-bottom: 1.3rem
+        }
+
+        .ch-title em {
+            font-style: italic;
+            color: var(--rust)
+        }
+
+        .dark .ch-number,
+        .dark2 .ch-number,
+        .dark3 .ch-number {
+            color: var(--aged)
+        }
+
+        .dark .ch-title,
+        .dark2 .ch-title,
+        .dark3 .ch-title {
+            color: var(--nt);
+            border-color: rgba(196, 149, 90, .3)
+        }
+
+        .dark .ch-title em,
+        .dark2 .ch-title em,
+        .dark3 .ch-title em {
+            color: var(--aged)
+        }
+
+        /* Text */
+        p {
+            font-size: clamp(1rem, 2.2vw, 1.17rem);
+            line-height: 1.92;
+            margin-bottom: 1.5em;
+            color: var(--ink)
+        }
+
+        .dark p,
+        .dark2 p,
+        .dark3 p {
+            color: #c5b490
+        }
+
+        .drop-cap::first-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.6em;
+            font-weight: 700;
+            float: left;
+            line-height: .82;
+            margin: .05em .1em 0 0;
+            color: var(--rust)
+        }
+
+        .dark .drop-cap::first-letter,
+        .dark2 .drop-cap::first-letter,
+        .dark3 .drop-cap::first-letter {
+            color: var(--aged)
+        }
+
+        em {
+            font-style: italic
+        }
+
+        strong {
+            font-weight: 600
+        }
+
+        blockquote {
+            border-left: 3px solid var(--aged);
+            margin: 2.5em 0;
+            padding: 1.1em 1.6em;
+            background: rgba(196, 149, 90, .09);
+            border-radius: 0 3px 3px 0
+        }
+
+        blockquote p {
+            font-style: italic;
+            color: var(--dim);
+            margin: 0;
+            line-height: 1.75
+        }
+
+        blockquote p::first-letter {
+            all: unset
+        }
+
+        .dark blockquote,
+        .dark2 blockquote,
+        .dark3 blockquote {
+            background: rgba(196, 149, 90, .06)
+        }
+
+        .dark blockquote p,
+        .dark2 blockquote p,
+        .dark3 blockquote p {
+            color: var(--nd)
+        }
+
+        .doc {
+            width: 100%;
+            margin: 2.5em 0;
+            background: #e8d5ae;
+            border: 1px solid #c4a06a;
+            border-radius: 3px;
+            padding: 1.6rem 1.8rem;
+            position: relative;
+            overflow: hidden
+        }
+
+        .doc::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, transparent 0, transparent 18px, rgba(180, 140, 80, .07) 18px, rgba(180, 140, 80, .07) 19px)
+        }
+
+        .doc-label {
+            font-size: .65rem;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: #8a6030;
+            margin-bottom: .8rem;
+            position: relative;
+            z-index: 1
+        }
+
+        .doc-body {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: .98rem;
+            color: #6b4020;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1
+        }
+
+        .doc-body::first-letter {
+            all: unset
+        }
+
+        .dark .doc,
+        .dark2 .doc,
+        .dark3 .doc {
+            background: #1e1508;
+            border-color: #4a3010
+        }
+
+        .dark .doc-label,
+        .dark2 .doc-label,
+        .dark3 .doc-label {
+            color: var(--aged)
+        }
+
+        .dark .doc-body,
+        .dark2 .doc-body,
+        .dark3 .doc-body {
+            color: #b89050
+        }
+
+        .ornament {
+            text-align: center;
+            color: var(--aged);
+            font-size: 1.1rem;
+            margin: 2.2em 0;
+            letter-spacing: .9em;
+            opacity: .7
+        }
+
+        .dark .ornament,
+        .dark2 .ornament,
+        .dark3 .ornament {
+            opacity: .35
+        }
+
+        /* Character voice cards */
+        .voice {
+            border: 1px solid var(--aged);
+            border-radius: 3px;
+            padding: 1.2rem 1.5rem;
+            margin: 2em 0;
+            background: rgba(196, 149, 90, .06)
+        }
+
+        .voice-name {
+            font-size: .65rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--rust);
+            margin-bottom: .6rem
+        }
+
+        .voice p {
+            font-style: italic;
+            color: var(--dim);
+            margin: 0;
+            line-height: 1.8
+        }
+
+        .voice p::first-letter {
+            all: unset
+        }
+
+        .dark .voice,
+        .dark2 .voice,
+        .dark3 .voice {
+            border-color: rgba(196, 149, 90, .25);
+            background: rgba(196, 149, 90, .04)
+        }
+
+        .dark .voice-name,
+        .dark2 .voice-name,
+        .dark3 .voice-name {
+            color: var(--aged)
+        }
+
+        .dark .voice p,
+        .dark2 .voice p,
+        .dark3 .voice p {
+            color: var(--nd)
+        }
+
+        /* Seal / end */
+        .seal {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(196, 149, 90, .22)
+        }
+
+        .seal-word {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--aged);
+            font-size: 1.15rem
+        }
+
+        .seal-rule {
+            width: 60px;
+            height: 1px;
+            background: rgba(196, 149, 90, .4);
+            margin: .9rem auto
+        }
+
+        /* Reveal */
+        .rv {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .65s ease, transform .65s ease
+        }
+
+        .rv.on {
+            opacity: 1;
+            transform: none
+        }
+
+        /* ══ NAV BAR ══ */
+        #navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(14, 9, 5, .95);
+            backdrop-filter: blur(12px);
+            padding: .8rem 1rem;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 200;
+            border-top: 1px solid rgba(196, 149, 90, .15)
+        }
+
+        #navbar.show {
+            display: flex
+        }
+
+        .nb-btn {
+            font-family: 'EB Garamond', serif;
+            font-size: .78rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--aged);
+            background: none;
+            border: 1px solid rgba(196, 149, 90, .28);
+            padding: .42rem 1rem;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all .2s;
+            white-space: nowrap
+        }
+
+        .nb-btn:hover {
+            background: rgba(196, 149, 90, .1);
+            border-color: var(--aged)
+        }
+
+        .nb-btn:disabled {
+            opacity: .18;
+            cursor: default;
+            pointer-events: none
+        }
+
+        .nb-toc-btn {
+            font-family: 'EB Garamond', serif;
+            font-size: .72rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--nd);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: .3rem .6rem;
+            transition: color .2s
+        }
+
+        .nb-toc-btn:hover {
+            color: var(--aged)
+        }
+
+        .nb-center {
+            text-align: center;
+            flex: 1;
+            padding: 0 .5rem
+        }
+
+        .nb-progress {
+            font-family: 'EB Garamond', serif;
+            font-size: .72rem;
+            color: var(--nd);
+            letter-spacing: .15em
+        }
+
+        .nb-title {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: .8rem;
+            color: var(--aged);
+            margin-top: .12rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            margin: 0 auto
+        }
+
+        /* Progress bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--rust), var(--aged));
+            z-index: 300;
+            transition: width .15s ease;
+            width: 0%
+        }
+    </style>
+</head>
+
+<body>
+    <div id="progress-bar"></div>
+
+    <!-- ══════ COVER ══════ -->
+    <div id="cover" onclick="showTOC()">
+        <div id="stars"></div>
+        <p class="cover-eyebrow">Complete Edition</p>
+        <div class="cover-compass"><span class="n">N</span><span class="s">S</span><span class="e">E</span><span
+                class="w">W</span></div>
+        <h1 class="cover-title">The Last<br>Cartographer</h1>
+        <p class="cover-sub">A story of maps, memory &amp; the edges of the world</p>
+        <p class="cover-edition">Eighteen Chapters &amp; an Epilogue</p>
+        <div class="cover-rule"></div>
+        <p class="cover-cta">Touch to begin the journey</p>
+    </div>
+
+    <!-- ══════ TABLE OF CONTENTS ══════ -->
+    <div id="toc-screen">
+        <div class="toc-inner">
+            <h2 class="toc-header">Table of Contents</h2>
+            <p class="toc-sub">The Last Cartographer — Complete Edition</p>
+            <div class="toc-rule"></div>
+            <div id="toc-list"></div>
+            <button class="toc-start-btn" onclick="startReading()">Begin Reading from Chapter I →</button>
+        </div>
+    </div>
+
+    <!-- ══════ STORY ══════ -->
+    <div id="story">
+
+        <!-- ── I ── -->
+        <div class="chapter-page bg1" id="pg0">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter I</p>
+                <h2 class="ch-title rv">The Map That <em>Breathed</em></h2>
+                <p class="drop-cap rv">On the morning Elara Voss found the map, the rain was falling so hard it seemed
+                    less like weather and more like an argument between the sky and the ground — a disagreement that had
+                    been building for years and had finally, in this particular October, boiled over into something like
+                    grief. She was seventy-two years old, retired from cartography, from ambition, and from the
+                    particular variety of hope that arrives with early mornings when you are young and still believe the
+                    world can be fully known. She had outlived two cats, one husband, and the conviction that maps were
+                    merely representations of places rather than something stranger and more consequential.</p>
+                <p class="rv">She was in Tomás's attic. She still called it that, four years after his death, because it
+                    still smelled of him: tobacco and old paper and the cedar of the sea chest he'd brought back from
+                    Lisbon in 1981. She was looking for a spare kettle her daughter Beatriz had sworn was up there. She
+                    found the kettle. She also found a copper tube she did not recognize, wedged between a broken
+                    barometer and an atlas whose spines had surrendered.</p>
+                <p class="rv">The tube was the length of her forearm, sealed at both ends with blood-dark wax. No label.
+                    No marking. But when she held it — and this she would never quite be able to explain — the metal
+                    felt warm. Not room-warm. Alive-warm. The warmth of a hand held through a long winter.</p>
+                <div class="doc rv">
+                    <p class="doc-label">Legend — lower right corner of the map inside</p>
+                    <p class="doc-body">Here lies the Isle of Unmade Things.<br>Latitude and longitude withheld by the
+                        Cartographer's Oath.<br><br><em>Scale: 1 inch to 1 mile, though distances vary with
+                            intent.<br>Drawn in the year of the last true expedition, by the hand of —</em><br><br>The
+                        signature was smudged. Or erased. The difference mattered.</p>
+                </div>
+                <p class="rv">She unrolled the map at the kitchen table with the rain still at it outside and the tea
+                    going cold beside her. The paper was unlike anything she had worked with — the weight of vellum, the
+                    flexibility of silk, and it refused to crease. When she pressed it flat with both palms, she felt —
+                    though she would later tell herself she had imagined this — the map push back. Gently. As though it
+                    had been waiting in that tube in that attic for exactly this pair of hands, and was, at last,
+                    exhaling.</p>
+                <p class="rv">The handwriting in the annotations was hers. Every annotation. Every number. Every
+                    careful, slightly-too-small label for rivers and mountains and the cluster of three towns on the
+                    eastern coast. Her style, exactly as it had been forty years ago. She had never been to this place.
+                    She had never drawn this map. She sat with that certainty for a long time, and it sat with her, and
+                    neither of them flinched.</p>
+                <blockquote class="rv">
+                    <p>"The worst thing that can happen to a cartographer," her professor had told her in 1974, "is to
+                        find a map she cannot explain. The second worst is to find one she can."</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── II ── -->
+        <div class="chapter-page bg2" id="pg1">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter II</p>
+                <h2 class="ch-title rv">What Tomás <em>Knew</em></h2>
+                <p class="drop-cap rv">She lasted three days before taking the map out again — quite good, by her
+                    private estimation. On the third day she laid it on the dining table, anchored its corners with the
+                    pepper grinder, a library book three weeks overdue, a spare compass, and a small stone from the
+                    beach at Porto Covo where they had spent their honeymoon, which she kept on every surface she owned
+                    without quite knowing why. Then she opened Tomás's journals.</p>
+                <p class="rv">He had kept them since before they met — seventy-odd volumes with green cloth covers, his
+                    handwriting growing more cramped with age until the final ones were almost illegible. She had not
+                    read them after his death. She had packed them into the sea chest, intending to read them when she
+                    was ready. She had not been ready. She opened the chest anyway.</p>
+                <div class="doc rv">
+                    <p class="doc-label">Tomás Voss — Journal Vol. 68, undated, est. 2017</p>
+                    <p class="doc-body">Found it again. Third time. Same bearing. Same fog. And then it simply appears —
+                        as though the sea hasn't been hiding it but waiting for me to deserve it again.<br><br>The
+                        island is different each time. The bones are the same — the black sand, the cove, the clearing
+                        with the table — but the details shift. Trees I didn't see before. A path that wasn't there. It
+                        is still becoming. I think it will go on becoming until someone finishes what I cannot.<br><br>I
+                        should tell Elara. I know I should. But she is the one the map wants, and I am afraid that if I
+                        tell her before she is ready, she will be ready too soon. Premature readiness is its own kind of
+                        unreadiness. She taught me this. She doesn't know she taught me.</p>
+                </div>
+                <p class="rv">She read every journal. Four days, barely sleeping. She made notes in pencil on a yellow
+                    legal pad. Cross-referenced dates and coordinates and the half-finished thoughts of a man she had
+                    loved for forty-seven years and had, it turned out, not fully known. This was not betrayal. She was
+                    clear-eyed enough to see that. It was the opposite: a man who had spent the last decade of his life
+                    preparing a door for his wife to walk through, carving it quietly, by hand, without making a fuss.
+                </p>
+                <blockquote class="rv">
+                    <p>"She has spent forty years making maps of places other people will visit," he wrote, six months
+                        before the hospital. "She has never made a map of a place only she can find. I want her to have
+                        that. I want her to have the finding of it. Some things cannot be handed to a person. They must
+                        be arrived at."</p>
+                </blockquote>
+                <p class="rv">She put the journal down and called Professor Aldric Mune — the oldest person she knew and
+                    the most likely to be useful.</p>
+            </div>
+        </div>
+
+        <!-- ── III ── -->
+        <div class="chapter-page bg1" id="pg2">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter III</p>
+                <h2 class="ch-title rv">The Professor and the <em>Oath</em></h2>
+                <p class="drop-cap rv">Aldric Mune was one hundred and one years old and occupied an office at the
+                    university that had not been cleaned, by his estimate, since 1988. Books rose in geological strata
+                    from floor to ceiling. Maps papered every wall, layered like sediment, the oldest visible in curled
+                    edges beneath the newest. His desk was a topography of its own. He navigated it by feel and by
+                    memory, which in his case had become the same thing.</p>
+                <p class="rv">He had been Elara's supervisor four decades ago. Before that he had been an archivist, an
+                    explorer, something adjacent to a diplomat for a country she had never been able to locate on any
+                    map — which, she now supposed, was deliberate. He was the kind of old that had gone past frailty and
+                    come out the other side into something that resembled bedrock: unmoved, unremarkable in its
+                    permanence, quietly necessary.</p>
+                <p class="rv">She put the copper tube on his desk. He looked at it for a moment without touching it.
+                    "Ah," he said. The syllable carried a full paragraph of information.</p>
+                <p class="rv">He told her about the Cartographer's Oath over the course of the afternoon: how in every
+                    generation, one cartographer was chosen — not by a guild, not by authority, but by inclination — to
+                    draw a place that did not exist so that it could begin to. The Isle of Unmade Things was not one
+                    island. It was the place where all unresolved things accumulated, waiting to be given form. Every
+                    age, it needed new edges. New names. A new hand with a new understanding of what the world was still
+                    trying to become.</p>
+                <div class="doc rv">
+                    <p class="doc-label">From "The Hidden Cartography" — Mune, A. (unpublished ms., 1967)</p>
+                    <p class="doc-body">The Oath does not recruit. It identifies. Somewhere in the world, in every
+                        generation, there is a cartographer for whom maps are not representations but invitations. For
+                        whom blank space is not absence but possibility.<br><br>The map they are given to draw will look
+                        like memory. It will feel like recollection. It will be neither. It will be an act of creation
+                        so quiet it resembles recognition.<br><br>They must reach the island while the map is still
+                        warm. The warmth is not metaphorical.</p>
+                </div>
+                <blockquote class="rv">
+                    <p>"Your husband understood the Oath," Mune said. "He was not the chosen one — that was never in
+                        doubt. But he found the island regardless, because love is a kind of navigation, and he was
+                        exceptionally good at knowing where things were. He mapped it for you. He kept it until he
+                        couldn't. The tube has been looking for your hands ever since." He paused. "It has been looking
+                        for a while."</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── IV ── -->
+        <div class="chapter-page bg2" id="pg3">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter IV</p>
+                <h2 class="ch-title rv">Preparations for an <em>Impossible Journey</em></h2>
+                <p class="drop-cap rv">She spent the first week arguing with herself — a private, remarkably civil
+                    debate conducted mostly in her head but occasionally, when she was alone in the kitchen at two in
+                    the morning, aloud. On one side: seventy-two years old, arthritic fingers, a heart condition her
+                    doctor described as "managed" in a tone that suggested management was the most optimistic available
+                    framing. On the other: a map drawn in her own hand, a husband who had believed in her specific
+                    readiness, and the copper tube she now carried everywhere, tucked into her coat pocket, because
+                    leaving it in a room made the room feel wrong.</p>
+                <p class="rv">She told Beatriz she was going on a sailing holiday. She had done this before — solo
+                    trips, short enough that Beatriz accepted it with moderate concern and a reminder about medication.
+                    She packed the map, instruments, a week's provisions, and the bottle of Rioja that Tomás had been
+                    saving for an occasion he never named. At the bottom of his sea chest, under everything, she found a
+                    sealed envelope with her name on it.</p>
+                <div class="doc rv">
+                    <p class="doc-label">Letter from Tomás Voss — sealed, undated</p>
+                    <p class="doc-body">Elara,<br><br>If you're reading this, the map found you. Everything is
+                        proceeding as it should. I hope you're not too cross with me.<br><br>The island is not
+                        frightening. Strange and frightening are not the same thing, though I know you have always
+                        treated them as synonyms. Take the Pelikan — the one with the bent nib. I know it doesn't look
+                        right. It is.<br><br>On the third day the compass will disagree with the chart. Trust the
+                        compass. When the compass disagrees with the sky, trust the chart. When both disagree with each
+                        other, trust yourself. You have always been the best navigator in this family, even sitting in
+                        an armchair.<br><br>I love you. I loved you. Those two sentences are the same sentence.<br><br>—
+                        T.</p>
+                </div>
+                <blockquote class="rv">
+                    <p>She folded the letter and put it in her breast pocket, against her heart, which was managed but
+                        beating with considerable enthusiasm. The Pelikan with the bent nib was in the pen tray on his
+                        desk. She picked it up. The nib, on inspection, was not bent. But she packed it anyway.</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── V ── -->
+        <div class="chapter-page bg3" id="pg4">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter V</p>
+                <h2 class="ch-title rv">The Sea Between <em>Here and There</em></h2>
+                <p class="drop-cap rv">The harbour she needed existed on no official chart. She found it anyway: a gap
+                    in the coastal road three hours north, a lane of grass between drystone walls, and at the end of it,
+                    a dock of silver-green wood where <em>La Última Vez</em> — The Last Time — sat as though it had
+                    always been there and planned to remain. Dark blue hull. Single-handed rigged. The hatch already
+                    unlocked. The water tank full. No note, no key, no explanation — the sea's version of the latch left
+                    open for someone who knows they are expected.</p>
+                <p class="rv">She cast off at noon on a Tuesday. The first two days were straightforward sailing in a
+                    straightforward sea, following the map's northern bearing through waters she recognized and then
+                    through waters she didn't, then through waters that were on no chart she had brought but felt
+                    navigable in the way certain unmarked roads feel navigable: not safe exactly, but right. The weather
+                    held. The wind was consistent. She slept in three-hour intervals and ate without much attention to
+                    what she was eating, which for a woman who took considerable care over her meals in ordinary life
+                    was itself a measure of how thoroughly the island had already claimed her attention.</p>
+                <div class="doc rv">
+                    <p class="doc-label">Navigation Log — Day 3, 1400 hrs</p>
+                    <p class="doc-body">Compass variance: 12° east, consistent. Barometric pressure: 1018 hPa,
+                        stable.<br>The water is a different colour here. Between blue and the inside of a mussel shell.
+                        I do not have a name for it. I find I need one badly — the cartographer's instinct: to name is
+                        to fix, to fix is to know, to know is to be no longer adrift. But perhaps adrift is the correct
+                        state for now.<br><br>Following the compass. The wind has shifted to agree with it. I take this
+                        as confirmation or coincidence, and I have decided the distinction no longer matters.<br><br>Am
+                        I afraid? I have been trying to determine this for three days. I don't think so. Afraid requires
+                        believing something bad is likely. I don't believe that. I believe something very large is
+                        likely. That is different.</p>
+                </div>
+                <p class="rv">On the fourth night she couldn't sleep. She sat in the cockpit with Tomás's bottle of
+                    Rioja and watched the stars, which were almost right. The constellations were present but shifted —
+                    nudged slightly, rearranged into configurations she almost but didn't quite recognize, as though a
+                    great careful hand had moved them an inch to the left while she wasn't looking. She poured a measure
+                    of wine into the sea: an old sailor's gesture, something Tomás had done at every crossing. The sea
+                    accepted it without comment. She sat until the sky began to lighten into something that was not
+                    quite dawn but was preparing to be, and she went below and slept deeply for the first time in weeks.
+                </p>
+                <p class="rv">On the fifth morning, fog. Not the gray, dripping fog of the north Atlantic. A fog with a
+                    quality of restraint to it — as though it were holding something back on purpose, waiting for the
+                    right moment. She made coffee. She stood at the bow and drank it. She said, very quietly, to the
+                    fog: <em>"All right."</em></p>
+                <p class="rv">The fog parted. And there it was.</p>
+            </div>
+        </div>
+
+        <!-- ── VI ── -->
+        <div class="chapter-page bg1" id="pg5">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter VI</p>
+                <h2 class="ch-title rv">The Isle of <em>Unmade Things</em></h2>
+                <p class="drop-cap rv">The island looked exactly like the map. Every contour, every elevation, the
+                    horseshoe cove and the ridge of hills running north to south like a spine, the three towns
+                    clustering on the eastern coast. She anchored in the cove. The water was that shell-interior colour
+                    and clear to an impossible depth — she could see the bottom as though looking through glass, the
+                    sand below dark and luminous, gently self-lit in a way she chose not to examine too directly.</p>
+                <p class="rv">The beach was black sand, fine as sifted flour. Her footsteps glowed amber for a moment
+                    before the light absorbed back into the ground. The trees were unlike anything in her taxonomy: the
+                    light through them had the horizontal gold of autumn beech trees, the sound they made in the breeze
+                    was like a room where people had recently been talking and the conversation still hung in the air,
+                    and the bark, where she touched it, was warm in the same way the copper tube was warm — alive-warm,
+                    aware-warm.</p>
+                <p class="rv">She walked to the clearing by a path that had not been visible until she was on it. In the
+                    center: an oak table, a stone seat, a copper tube. She sat and let the island look at her in return.
+                    It settled, the way a room settles when the right person finally arrives. She understood she was
+                    being received. This was, perhaps, the oddest and most comfortable she had felt in years.</p>
+                <div class="doc rv">
+                    <p class="doc-label">Field notes — pencil, written on the boat in the hour after landing</p>
+                    <p class="doc-body">The three towns are not uninhabited. They are pre-inhabited. Waiting for the
+                        right people the way certain chairs in a house wait for whoever will eventually own
+                        them.<br><br>The buildings are finished but not furnished. The streets are laid but not named.
+                        The harbour at the northern town has boats — wooden, sound, rigged — but no fishermen yet. The
+                        library in the second town has shelves but no books. The lighthouse at the southern cape has a
+                        lamp but no keeper.<br><br>Everything here is almost. It needs one final act: naming. Deciding.
+                        Fixing the unfixed.<br><br>I think that is what I'm here to do. I think it has always been what
+                        I'm here to do.</p>
+                </div>
+                <blockquote class="rv">
+                    <p>"Hello," she said to the clearing, feeling slightly foolish, and then slightly less so when the
+                        trees shifted in something that was not wind but had wind's function, and the air in the
+                        clearing seemed to change quality — to become more itself, the way a conversation becomes more
+                        honest when someone finally says what they actually mean.</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── VII ── -->
+        <div class="chapter-page bg2" id="pg6">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter VII</p>
+                <h2 class="ch-title rv">What the Map <em>Required</em></h2>
+                <p class="drop-cap rv">The map in the new copper tube was almost hers. The same island seen from a
+                    greater understanding — more detailed, more certain, with the confidence of something long and
+                    carefully considered. But in several significant places: unfinished. The hills had no elevation
+                    markings. The cove had no depth soundings. The towns had streets but no names. At the center of the
+                    island, where she now sat, the clearing was marked with a small circle and, inside it, a question
+                    mark.</p>
+                <p class="rv">She understood. She uncapped the Pelikan.</p>
+                <p class="rv">She worked through the afternoon and into an evening that arrived with unusual patience —
+                    not hurrying toward darkness the way ordinary evenings do, but taking its time, as though it
+                    understood she was doing something that needed the light. She took measurements. She walked the
+                    hills with her compass. She sounded the cove from the dinghy she found drawn up on the beach,
+                    lowering a weighted line, noting the numbers in the margin. The Pelikan performed beyond
+                    expectation: not merely conveying what she directed but slightly clarifying it, the way a great
+                    translator improves without distorting, finding the exact word you meant to use.</p>
+                <div class="doc rv">
+                    <p class="doc-label">Working notes — naming the three towns</p>
+                    <p class="doc-body">The naming has been the most difficult part. Names matter beyond labels — anyone
+                        in cartography knows this. They are acts of commitment. They fix a thing in the world. They give
+                        it a self it didn't quite have before.<br><br>Town One, at the northern point, facing clean
+                        weather and open sea: <strong>Porto Primeiro.</strong> First harbour. For all beginnings and
+                        everyone who has ever needed one.<br><br>Town Two, inland among the warm-barked trees, where the
+                        library waits with empty shelves: <strong>Vila do Meio.</strong> Village of the Middle. For the
+                        long, unspectacular middle of things, where most of life is actually lived.<br><br>Town Three,
+                        at the southern cape, facing away from the known world toward everything that hasn't happened
+                        yet: <strong>Cabo do Resto.</strong> Cape of the Rest. For all the futures still becoming.</p>
+                </div>
+                <p class="rv">When she wrote the names on the map, something settled. Not loudly — no earthquake, no
+                    light from the sky. But something settled the way a bruise stops aching: gradually, completely, and
+                    with the particular relief of a thing that is finally allowed to stop hurting. The island breathed
+                    differently. Below, at Porto Primeiro, she heard water moving in the harbour with a new purpose, the
+                    sound of tides that know they have somewhere particular to go.</p>
+                <p class="rv">By midnight she had completed all but the center. She sat before the question mark and
+                    thought for a long time about what certainty looked like. Then she wrote, in the smallest hand she
+                    had ever used, two words she had not planned. They arrived fully formed, the way the best
+                    certainties always do — not constructed, but recognized. She wrote them and knew they were right the
+                    way she knew true north: not by argument but by instrument.</p>
+                <p class="rv">She put down the pen. She looked at the stars, which had rearranged further and were now,
+                    somehow, easier to read than the ones she had grown up with.</p>
+            </div>
+        </div>
+
+        <!-- ── VIII ── -->
+        <div class="chapter-page bg3" id="pg7">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter VIII</p>
+                <h2 class="ch-title rv">The Morning After <em>Everything</em></h2>
+                <p class="drop-cap rv">She slept in the boat and woke before dawn to find the island clarified. Not
+                    changed — the word wasn't right. <em>Clarified</em>: more itself, as though overnight it had
+                    finished a decision it had been approaching for a long time. The trees were the same trees but more
+                    completely so. The black sand sparkled with confidence rather than tentativeness. In Porto Primeiro,
+                    she was certain she heard voices — the murmur of a town beginning its morning, distant and
+                    comfortable, the sound of people who know where they are.</p>
+                <p class="rv">She rowed ashore one last time. She walked to the clearing. The map was on the table,
+                    complete — the question mark replaced, the ink dried to exactly the right shade of certainty. She
+                    read it once through, slowly, as a reader, to know what she had made. Then she rolled it, slid it
+                    into the copper tube, sealed it, and left it on the table.</p>
+                <div class="doc rv">
+                    <p class="doc-label">Final log entry — aboard La Última Vez, departure day</p>
+                    <p class="doc-body">Departure: 1100 hrs. Bearing: home.<br>Compass: agreed with chart. Both agreed
+                        with the sky. First time all three have agreed since the third day out.<br><br>The island was
+                        visible until it wasn't. I did not try to watch the exact moment it disappeared. This seemed
+                        important — to let it go without witnessing the going.<br><br>The two words I wrote at the
+                        centre of the map:<br><em>Here, everything belongs.</em><br><br>I believe the island knew this
+                        about itself. It needed someone to confirm it in writing. That is perhaps the most honest
+                        description of what cartography has always been.</p>
+                </div>
+                <blockquote class="rv">
+                    <p>She arrived at the dock on the seventh day, tied up the boat, and left it exactly as she'd found
+                        it: provisioned, unlocked, ready. She drove home slowly, stopping once for petrol and a cheese
+                        sandwich. She called Beatriz from the road and said the trip had been wonderful and she felt
+                        very well and she would explain over dinner on Thursday. She explained very little over dinner
+                        on Thursday. But Beatriz said afterward that her mother looked like someone who had put down
+                        something heavy they had been carrying for a very long time without quite noticing the weight.
+                    </p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── IX ── -->
+        <div class="chapter-page dark" id="pg8">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter IX</p>
+                <h2 class="ch-title rv">Declan of <em>Galway</em></h2>
+                <p class="drop-cap rv">Three months later, a young man named Declan Mór drove too far north on an
+                    unfamiliar coast and found a gap in a drystone wall he had not been looking for. He was twenty-nine,
+                    a draughtsman newly unemployed, the kind of lost that presents as a wrong turn but is actually
+                    something older and more fundamental — the lost of a person who has not yet found what they are
+                    supposed to be doing with the particular shape of their abilities.</p>
+                <p class="rv">He found the boat. He found the hatch unlocked and the tank full and the copper tube on
+                    the chart table. The map inside was warm when he unrolled it, drawn in a hand that felt precise and
+                    somehow kind, and showed an island with three named towns and a harbor and a lighthouse and a
+                    library with empty shelves. At the center, in very small writing: <em>Here, everything belongs.</em>
+                </p>
+                <p class="rv">He cast off that afternoon. He did not know why, or rather he knew in the way you know
+                    things larger than reasons. On the third day his compass drifted east. He followed it. On the fifth
+                    morning the fog parted.</p>
+                <div class="doc rv">
+                    <p class="doc-label">Declan Mór — field notes, pencil on a paper bag</p>
+                    <p class="doc-body">The island is more complete than the map suggested. The towns are real towns now
+                        — I can hear them before I see them. Porto Primeiro smells of salt and bread. Vila do Meio has a
+                        cat sitting in the window of the library, which still has no books.<br><br>The copper tube on
+                        the table in the clearing holds a map that is nearly finished. The lighthouse at Cabo do Resto
+                        has no light source in the lamp room. The library has no books. The roads between towns are
+                        unmade.<br><br>I know how to do roads. I know how to do a lighthouse mechanism. I can design the
+                        lamp assembly from first principles. I don't know if that's what's needed, but I think it might
+                        be.<br><br>I think the island makes use of what each person specifically has.</p>
+                </div>
+                <blockquote class="rv">
+                    <p>He left his additions on the map. Roads with grades noted. The lighthouse lamp assembly in a
+                        clean working diagram in the lower margin, drawn with a draughtsman's precision that he had
+                        always assumed was purely professional and now understood was also something else — a way of
+                        caring about how things worked, how light reached places that needed light. He left his map
+                        behind. He did not want to. He left it anyway, understanding now why it was required.</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── X ── -->
+        <div class="chapter-page dark2" id="pg9">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter X</p>
+                <h2 class="ch-title rv">The Woman in the <em>Library</em></h2>
+                <p class="drop-cap rv">Six months after Declan returned from the island — thinner, quieter in a good
+                    way, employed now as an architectural draughtsman in a firm that specialized in restoring old
+                    lighthouses along the western coast, which he had not planned but found entirely unsurprising — a
+                    woman named Priya Subramaniam arrived at the dock. She was thirty-eight years old, a librarian from
+                    Mysore who had come to Ireland on a fellowship she had applied for on a whim and been astonished to
+                    receive.</p>
+                <p class="rv">She had found the copper tube in the glove compartment of the rental car she had picked up
+                    at Shannon Airport. The map inside was warm. She drove north immediately, following the map without
+                    quite knowing she was following it, the way you sometimes follow music through a crowd without
+                    deciding to. She found the lane. She found the boat. She did not think of herself as someone who
+                    sailed, but the boat seemed to think otherwise.</p>
+                <div class="voice rv">
+                    <p class="voice-name">Priya Subramaniam — from a letter to her sister, Kavitha</p>
+                    <p>You will think I have lost my mind, and perhaps I have, but I want to tell you: I have found the
+                        most extraordinary place. It is an island that doesn't appear on any map I have ever catalogued,
+                        and I have catalogued a great many. It has a library with perfect shelves and no books. The
+                        shelves are the right height for everything. I know this because I spent two days measuring them
+                        and I could tell immediately that whoever built them understood what books need — not just
+                        storage, but respect. Space between. Breathing room. The shelves are an act of love toward books
+                        that don't yet exist. I am going to fill them.</p>
+                </div>
+                <p class="rv">She had brought, in three waterproof bags, as many books as she could carry. This was, by
+                    the count she later provided, four hundred and twelve volumes — selected over the course of two
+                    feverish weeks from second-hand shops, her own collection, and a remarkable quantity of books she
+                    had been meaning to find a home for since graduate school. She knew, while she was packing them,
+                    that this was strange behaviour. She did it anyway. The island had been waiting for a librarian. A
+                    librarian had been found.</p>
+                <p class="rv">She shelved the books over three days, making order not alphabetically or by Dewey but by
+                    a logic she couldn't quite articulate and felt completely certain about: proximity of ideas,
+                    relationship of themes, the particular way one book leads to another at three in the morning when
+                    you are looking for something you cannot yet name. When she was done, the library felt, for the
+                    first time, like itself. She stood in the doorway and looked at the spines and felt something she
+                    recognized as the opposite of loneliness.</p>
+                <blockquote class="rv">
+                    <p>On the map she added, in the small careful hand she used for catalogue entries: the library's
+                        collection in a hand-drawn index, arranged in her unnameable system. She added, beside Vila do
+                        Meio, a note: <em>Reading hours: whenever needed, which is always.</em> Then she sealed the tube
+                        and left it on the table and walked back to the boat, and she cried a little on the way, not
+                        unhappily.</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── XI ── -->
+        <div class="chapter-page bg1" id="pg10">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter XI</p>
+                <h2 class="ch-title rv">Mune's <em>Confession</em></h2>
+                <p class="drop-cap rv">Elara visited Professor Mune in the spring. She found him as she always found him
+                    — behind the desk, surrounded by strata, apparently engaged in a project of such complexity that it
+                    had ceased to be describable as a project and had become instead a condition. He was drinking tea of
+                    a colour that suggested it had been steeping since approximately yesterday. He looked, she thought,
+                    subtly older, which was alarming because she had previously considered him to have reached the outer
+                    edge of age and plateaued there, like a mountain range that has stopped growing.</p>
+                <p class="rv">"I should tell you something," he said, without preamble, when she sat down. This was
+                    unusual. Mune's preferred mode was to make her ask. When he volunteered information it was because
+                    the burden of withholding it had become larger than the burden of sharing it.</p>
+                <p class="rv">"All right," she said.</p>
+                <p class="rv">"I have been there," he said. "The island. In 1943. I was twenty years old and
+                    considerably less careful than I later became." He looked at the window, at the city beyond it going
+                    about its business. "I was not the chosen cartographer. I found my way there by accident — or what I
+                    assumed was accident. I have since come to believe that no one finds their way there by accident."
+                </p>
+                <div class="doc rv">
+                    <p class="doc-label">From Mune's private papers — memoir fragment, undated</p>
+                    <p class="doc-body">The island in 1943 was almost entirely unmade. The black sand was there and the
+                        cove and the clearing, but the towns were outlines — shapes in the grass, the idea of streets.
+                        There was no table yet. No copper tube. Only a compass that didn't point north and a feeling I
+                        can only describe as being expected.<br><br>I was a young man and I was not ready. I did not
+                        understand what was being asked of me. I left without adding anything. I have spent sixty years
+                        regretting this, which is perhaps the most useful thing I have done with the regret: it made me
+                        very good at recognizing, in others, the specific readiness I lacked.<br><br>That is why I
+                        became a teacher. That is why I recognized it in Elara. We are not failures when we arrive too
+                        soon. We are preparation for someone who will arrive in time.</p>
+                </div>
+                <blockquote class="rv">
+                    <p>"You should have told me," Elara said. "Before I went."<br><br>"Yes," Mune agreed. "I should have
+                        told you many things. I told you what I thought you needed. I may have been wrong about the
+                        precise quantity." He looked at her steadily. "Was the journey what you
+                        expected?"<br><br>"Nothing about it was what I expected," she said. "It was considerably better
+                        than that."<br><br>He nodded, as though she had confirmed a hypothesis he had been running for
+                        decades. "Good," he said. "Good." And then, in a voice that was smaller and more private than
+                        she had ever heard from him: "I'm glad it found you."</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── XII ── -->
+        <div class="chapter-page bg2" id="pg11">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter XII</p>
+                <h2 class="ch-title rv">The Keeper of the <em>Lighthouse</em></h2>
+                <p class="drop-cap rv">The lighthouse at Cabo do Resto found its keeper in the form of a retired
+                    Norwegian maritime engineer named Sigrid Halvorsen, who was sixty-five and had recently decided she
+                    was done with retirement. Retirement, she had found, was a word that described what happened when
+                    you stopped doing the thing that made you yourself, and stopping being yourself was a kind of slow
+                    ending she had no interest in. She found the copper tube in a second-hand bookshop in Bergen, tucked
+                    inside a copy of a navigational atlas published in 1954. The atlas was not for sale. The tube was
+                    not in the atlas. She found it anyway.</p>
+                <p class="rv">The map she unrolled was warmer than the room. She read it with the professional attention
+                    of someone who had spent forty years understanding how structures worked, how light worked, how the
+                    relationship between a lighthouse and a ship was one of the purest forms of communication: <em>I am
+                        here. You are not alone. Here is where the rocks are.</em></p>
+                <p class="rv">She sailed south, then west, then in a direction that had no compass name. She found the
+                    island on the third morning, without fog, which suggested, she decided, that the island had been
+                    waiting less patiently for her than for some others — more confident of her arrival, or simply more
+                    in need of a working lighthouse.</p>
+                <div class="voice rv">
+                    <p class="voice-name">Sigrid Halvorsen — spoken account, as recorded by Elara Voss</p>
+                    <p>The lamp assembly Declan had drawn in the margin of the map was exactly right. I built it in two
+                        days from materials the island seemed to have been keeping for this purpose — there was a
+                        storeroom in the lighthouse base I cannot explain the provenance of, containing precisely the
+                        components required. Nothing extra. Nothing missing. The island has a sense of economy I respect
+                        enormously.<br><br>When I lit the lamp for the first time, the light reached the horizon in both
+                        directions. I do not know what ships it was guiding, or to what port. But I know that somewhere,
+                        something was guided that needed guiding. I felt this as certainly as I have ever felt anything.
+                    </p>
+                </div>
+                <blockquote class="rv">
+                    <p>Sigrid added to the map a full technical annotation of the lighthouse mechanism — not because
+                        future cartographers would need to rebuild it, but because she believed that the how of a thing
+                        was as important as the what; that a light without an explanation of its source was incomplete.
+                        She added, in the legend, a small symbol for the lighthouse that she designed herself: a circle
+                        with a line extending upward, like a compass rose reduced to its essential meaning. Then she
+                        left, feeling considerably more herself than she had in several years.</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── XIII ── -->
+        <div class="chapter-page bg3" id="pg12">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter XIII</p>
+                <h2 class="ch-title rv">The Guild That <em>Isn't</em></h2>
+                <p class="drop-cap rv">Elara began, in the second year after her voyage, to receive letters. Not many —
+                    three or four a year, arriving in envelopes with no return address and stamps from countries she
+                    sometimes had to look up. They were from people who had been to the island. They wrote to thank her,
+                    without knowing quite what they were thanking her for; they wrote to describe what they had added to
+                    the map; they wrote, sometimes, simply to confirm that the island was real, that they had not
+                    imagined it, that there was at least one other person in the world who would believe them if they
+                    said what they had seen.</p>
+                <p class="rv">She began to write back. The correspondence became, gradually, a community — not
+                    organized, not formally constituted, without a name or a charter or a meeting schedule. A community
+                    in the oldest sense: a group of people who recognized something essential in one another because
+                    they had been to the same extraordinary place and come back changed in the same extraordinary
+                    direction. They did not become friends, exactly. Something more specific than that. Something for
+                    which the existing vocabulary was insufficient.</p>
+                <div class="doc rv">
+                    <p class="doc-label">From a letter — Priya Subramaniam to Elara Voss</p>
+                    <p class="doc-body">I have been thinking about what to call us. Not a guild — that implies hierarchy
+                        and exclusion. Not a society — too formal, too much the suggestion of membership dues. Perhaps
+                        simply: those who have been. Though even that is inadequate, because the going is not the point.
+                        The going is only how the point is reached.<br><br>What we share is that we were given something
+                        to complete, and we completed it. That the completing changed us. That we came back with a
+                        different relationship to blank space — we no longer see it as absence. We see it as
+                        invitation.<br><br>I have started a small lending library in my neighbourhood. The books I
+                        couldn't bring to the island. It turns out the island was practice. This is the real work.</p>
+                </div>
+                <p class="rv">Elara pinned the letters to the wall above her desk, beside the framed draft of the map —
+                    the first one, from the attic, the version that was Tomás's love letter to her readiness. The
+                    letters and the map made a kind of cartography of their own: the geography of people who had been
+                    changed by the same place, spread across the world, each doing in their own particular life what
+                    they had been shown how to do on the island. Making things. Naming things. Filling in the blank
+                    spaces.</p>
+                <blockquote class="rv">
+                    <p>She did not consider herself the head of anything. She was, at most, the first among
+                        contemporaries — the one who had gone earliest in this cycle, whose voyage had somehow started
+                        the current sequence. She felt about this the way she felt about being the senior cartographer
+                        on a survey team: responsible for setting the initial coordinates, after which everyone else's
+                        contribution was equally necessary, and frequently more interesting.</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── XIV ── -->
+        <div class="chapter-page dark" id="pg13">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter XIV</p>
+                <h2 class="ch-title rv">What the Island <em>Remembers</em></h2>
+                <p class="drop-cap rv">In the third year, a historian named Dr. Osei Bonsu arrived at the island from
+                    Accra. He was forty-four years old, an archivist of forgotten places — his specialty was locations
+                    that had existed in documents but not on maps, or on maps but not in memory, or in memory but
+                    nowhere else. He found the copper tube in the pages of a colonial-era atlas he was cataloguing for
+                    the national archives: an atlas that had no business containing anything not published in 1912, and
+                    yet. He recognized the warmth of the tube immediately. His grandmother had told him about it.</p>
+                <p class="rv">His grandmother had been to the island in 1961. She had added to the map the first record
+                    of the island's own history — she was a historian; she understood that a place without a past was a
+                    place without depth, that depth was what gave a landscape weight, the quality of mattering. She had
+                    written, in her strong even hand, along the margins and in the white spaces between features, a
+                    provisional history of the Isle of Unmade Things: who had come, what they had added, what the island
+                    had needed from each of them. A metacartography. A map of the making of the map.</p>
+                <div class="doc rv">
+                    <p class="doc-label">From the island's history — Mrs. Adwoa Bonsu's margin annotations, 1961</p>
+                    <p class="doc-body">The island was first mapped in its present form circa 1887, by a Basque
+                        cartographer whose name is not recorded but whose work is evident in the foundational contours.
+                        She mapped the bones.<br><br>The black sand has been walked by at least forty hands across four
+                        centuries. Most of them left something. All of them left changed. The island does not use
+                        everyone — it calls only those with something specific it needs. This seems cruel until you
+                        understand that everyone has something specific. The island is patient. It waits.<br><br>What
+                        the island is for: not habitation. Not conquest. Not tourism. The island is a place where things
+                        that almost exist can finish becoming themselves, aided by the specific human capability the
+                        island requires at the time. It is, in the most literal sense: collaborative.</p>
+                </div>
+                <p class="rv">Dr. Bonsu added to the map what his grandmother had not had time to include: a timeline
+                    along the western edge of the parchment, listing the dates and nations of origin of every visitor
+                    his archival skills could reconstruct from the evidence on the map itself — the different inks, the
+                    different handwriting styles, the different conventions for elevation and depth. He was there for a
+                    week. The island, he said later, was an archivist's paradise: the perfect record of its own
+                    becoming, legible to anyone trained to read it.</p>
+                <blockquote class="rv">
+                    <p>"Every place has a history," he wrote to Elara afterward. "But most places can only tell their
+                        history through what they have survived. This island tells its history through what it has
+                        invited. That is a completely different kind of record — not of endurance but of collaboration.
+                        I have never seen anything like it. I may spend the rest of my career trying to find an
+                        analogue."</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── XV ── -->
+        <div class="chapter-page dark2" id="pg14">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter XV</p>
+                <h2 class="ch-title rv">Elara's <em>Return</em></h2>
+                <p class="drop-cap rv">In the fourth year, the copper tube came back. She found it on the kitchen table
+                    one morning, though she was certain she had locked the house and she was equally certain it had not
+                    been there the night before. The wax seal was new. She knew, when she picked it up and felt the
+                    warmth, that it was not the same tube she had left on the island — or that it was the same tube but
+                    had been somewhere since, and had returned having changed as thoroughly as she had.</p>
+                <p class="rv">She did not open it immediately. She made tea. She sat in Tomás's chair — she still called
+                    it that, and she had decided she would go on calling it that indefinitely because the naming of it
+                    as his was not a failure to move forward but a way of keeping him in the geography of her daily
+                    life, which was where he belonged. She drank her tea. Then she opened the tube.</p>
+                <div class="doc rv">
+                    <p class="doc-label">The map — fourth year, second visit</p>
+                    <p class="doc-body">The island had grown. Porto Primeiro's harbour was annotated with depths and
+                        approach bearings, and three vessels were named in the margin. Vila do Meio showed a market
+                        square that had not been there before, and the library's window had a light in it. Cabo do Resto
+                        had a keeper's log in the lighthouse — Sigrid's notation, several pages compressed into a
+                        marginal text that was the most concentrated technical writing Elara had ever seen.<br><br>At
+                        the center, the two words remained: <em>Here, everything belongs.</em> But beside them, in a
+                        hand she did not recognize, a single addition:<br><em>And everything that belongs here remembers
+                            where it came from.</em></p>
+                </div>
+                <p class="rv">She sailed back. The journey took four days this time — the island closer, or she more
+                    certain of the way, or both. The fog was entirely absent. She anchored in the cove and rowed to the
+                    beach, and the black sand glowed amber under her feet, the same amber as before, but warmer in a way
+                    she could not measure, only feel.</p>
+                <p class="rv">Porto Primeiro was inhabited. Not by many — perhaps a dozen people, going about the
+                    morning in the unhurried way of a town that knows it has enough time. She did not recognize any of
+                    them. They greeted her with the comfortable acknowledgment of people who know who someone is without
+                    needing an introduction. She walked the streets she had named and found them named on signs she had
+                    not made, in a typeface she did not recognize and immediately loved.</p>
+                <blockquote class="rv">
+                    <p>In Vila do Meio's library, Priya's four hundred and twelve books had been joined by others —
+                        hundreds more, in languages she couldn't all read, some of them books she had never heard of and
+                        immediately needed. The cat she had not seen before was still in the window, in the position of
+                        a cat who has been there long enough to become architectural. She found a chair. She found a
+                        book that was precisely what she didn't know she needed. She read for two hours. The light was
+                        perfect throughout.</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── XVI ── -->
+        <div class="chapter-page bg1" id="pg15">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter XVI</p>
+                <h2 class="ch-title rv">The Gathering of <em>Cartographers</em></h2>
+                <p class="drop-cap rv">The letters had been arriving for three years, and Elara had noticed a pattern:
+                    occasionally, two or three people wrote to her in the same week, having been to the island within
+                    days of each other without meeting. The island, it seemed, was capable of hosting multiple visitors
+                    simultaneously — they simply moved around each other the way people move around each other in a
+                    library, absorbed in their individual purposes, aware of each other's presence without needing to
+                    intersect.</p>
+                <p class="rv">But in the fifth year, something different happened. Seven people arrived at the island in
+                    the same week. Seven copper tubes appeared in seven ordinary moments in seven countries — in a
+                    kitchen in Osaka, a workshop in Nairobi, a studio apartment in São Paulo, a university office in
+                    Warsaw, a farmhouse in the Atlas Mountains, a houseboat in Amsterdam, and a desk drawer in Elara's
+                    own house. Seven people who did not know each other, from seven completely different lives, drawn by
+                    seven warm tubes to the same fog-edged harbour in the same fog-edged week.</p>
+                <div class="voice rv">
+                    <p class="voice-name">From the account of Yuki Tanaka, ceramicist, Osaka</p>
+                    <p>I expected to be alone there. I had assumed the island was private, the way important things
+                        often feel private even when they're not. But when I landed, there were six others, and we
+                        looked at each other the way you look at someone you've never met but recognize completely —
+                        because you have been through the same specific thing that most people never go through at all.
+                        We didn't ask each other's names immediately. We compared what we had in our bags. Between the
+                        seven of us, we had: drafting tools, a set of ceramic molds, a collection of seeds, three
+                        musical instruments, a carpenter's plane, a medical kit, and enough between us to understand
+                        that the island had been waiting not for one person this time but for an ensemble.</p>
+                </div>
+                <p class="rv">They worked together for two weeks. The ceramicist, Yuki, made tiles for the public
+                    buildings — each one slightly different, hand-pressed, with patterns drawn from her training but
+                    chosen by some deeper instinct for what the island needed on its walls. The carpenter, a man named
+                    Rowan from New Zealand, built the market stalls in the square of Vila do Meio, with the particular
+                    joinery of someone who understood that a structure that would be used daily needed to be built for
+                    daily use: sturdy, repairable, honest in its materials. The musician, a Moroccan woman named Latifa,
+                    discovered that the island had acoustics unlike anything she had encountered — the clearing
+                    amplified sound in a way that seemed intentional, as though it had been designed as a performance
+                    space by someone who knew exactly how music needed to move through air.</p>
+                <blockquote class="rv">
+                    <p>The map they left was, by general agreement, the most complete version yet. Seven hands, seven
+                        disciplines, seven different understandings of what a place needed in order to be itself. When
+                        Elara heard about it — in a letter from Yuki, accompanied by a small ceramic tile she had made
+                        for the library and then impulsively kept — she felt something she could only describe as
+                        parental pride, and then immediately corrected herself: not parental. Collegial. The pride of a
+                        colleague who has seen the work continue past the point where she could have taken it alone.</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── XVII ── -->
+        <div class="chapter-page dark3" id="pg16">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter XVII</p>
+                <h2 class="ch-title rv">What Mune Saw at the <em>End</em></h2>
+                <p class="drop-cap rv">Professor Aldric Mune died in the spring of the sixth year, which was three years
+                    after his one hundred and first birthday and approximately sixty-three years after the actuarial
+                    tables had predicted he would. He died in his office, which Elara felt was the right place — a man
+                    who had lived in his mind dying where his mind had been most at home. He left her everything: the
+                    papers, the maps on the walls, the tower of books that she suspected would take years to process and
+                    was certain would contain, somewhere in its geological strata, things she was not yet ready to know.
+                </p>
+                <p class="rv">He also left her a letter. Not sealed — Mune had not been a man for sealed letters, having
+                    long held that secrecy was mostly another form of procrastination. The letter was folded once, with
+                    her name on the outside in his cramped late handwriting, left on top of the manuscript he had been
+                    working on for sixty years, which was titled, simply, <em>A Complete History of Incomplete
+                        Places.</em></p>
+                <div class="doc rv">
+                    <p class="doc-label">Letter from Aldric Mune — undated, found in his office</p>
+                    <p class="doc-body">Elara,<br><br>I want to tell you what I have concluded after one hundred and
+                        four years of thinking about this: the island is not the point.<br><br>The island is a method. A
+                        laboratory. A place where people discover what they are capable of contributing, so that they
+                        can come home and contribute it here — in the ordinary world, in the unmagical streets, in the
+                        libraries and harbours and lighthouses that need the same things the island needs but do not
+                        have the advantage of making themselves obvious.<br><br>Every person who has gone to the island
+                        comes back and starts something. A library. A lighthouse restoration. A ceramics studio. A
+                        community garden. A map of their neighbourhood drawn with the care they discovered they
+                        possessed. The island does not keep its cartographers. It sends them back, improved, to do the
+                        work.<br><br>You began all of this. Or rather — you began this cycle. There were others before
+                        you, in other generations. There will be others after. The Oath renews itself because the world
+                        keeps having blank spaces and the blank spaces keep needing people willing to fill them with
+                        care.<br><br>I am very glad I lived long enough to see what you did with your readiness. I was
+                        not ready at twenty. You were ready at seventy-two. There is no correct age for this. There is
+                        only: when the map arrives, open the tube.<br><br>— A.M.</p>
+                </div>
+                <blockquote class="rv">
+                    <p>She read the letter twice. Then she set it beside Tomás's letter in her breast pocket — both of
+                        them there now, against the managed but enthusiastic heart — and she sat in Mune's chair among
+                        his books and his maps and she allowed herself, for a good long time, to feel the specific
+                        weight of being loved by people who had understood exactly what she was capable of and had
+                        trusted her to become it. This was, she reflected, among the finest things a person could
+                        experience. She was glad she had not been too afraid to receive it.</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!-- ── XVIII & EPILOGUE ── -->
+        <div class="chapter-page dark" id="pg17">
+            <div class="page-inner">
+                <p class="ch-number rv">Chapter XVIII &amp; Epilogue</p>
+                <h2 class="ch-title rv">The Map of All <em>Maps</em></h2>
+                <p class="drop-cap rv">In the seventh year, Elara completed her final map. Not the island's map — she
+                    would not return there again, she felt, though she held this feeling lightly, knowing that islands
+                    did not always consult one's expectations. Her final map was of the community itself: the people who
+                    had been, the things they had added, the trails of connection between them drawn as carefully as any
+                    coastline, annotated with dates and contributions and the specific ways each person's particular
+                    capability had become, on the island and then at home, exactly the thing that was needed.</p>
+                <p class="rv">It was the most complex map she had ever made and the most precise and the most honestly
+                    uncertain — she left blank spaces deliberately, where people she had not yet heard from might add
+                    themselves, where future cartographers whose names she didn't know would find room to belong. The
+                    legend read, in the bottom right corner, in the smallest and most careful hand she had:</p>
+                <div class="doc rv">
+                    <p class="doc-label">Legend — The Map of Those Who Have Been</p>
+                    <p class="doc-body"><em>This map is not finished. It is not meant to be finished.<br>It is meant to
+                            be continued by whoever finds it next.<br><br>What you will need: honesty about what you are
+                            capable of.<br>Willingness to go when called, even if you do not know by what.<br>A pen,
+                            preferably one that has been waiting for you specifically.<br><br>What you will find: that
+                            the blank spaces were never empty.<br>They were patient.<br><br>Here, everything
+                            belongs.<br>And everything that belongs here remembers where it came from.<br>And what it
+                            was made of.<br>And what it was made for.</em></p>
+                </div>
+                <p class="rv">She framed it and hung it beside Tomás's draft from the attic and Mune's unpublished
+                    manuscript — now properly organized and donated to the university library, where it caused
+                    considerable excitement among a very small and very dedicated community of scholars and absolute
+                    bewilderment among everyone else, which was precisely as it should be.</p>
+                <div class="ornament rv">· · · · ·</div>
+                <p class="rv">Somewhere — bearing uncertain, latitude and longitude withheld by the Cartographer's Oath
+                    — an island continues to become itself. Porto Primeiro's harbour is busy now, by island standards,
+                    which is to say: purposeful. Vila do Meio's library stays open past midnight for anyone who needs
+                    it, and the cat has multiplied into three cats, each inhabiting a different window in the manner of
+                    institutions that know what they are doing. Cabo do Resto's lighthouse sends its beam across water
+                    that has no name on any official chart, guiding something, always, that needs guiding.</p>
+                <p class="rv">In the clearing with the oak table, a copper tube waits. It is always warm. It is never
+                    empty. The map inside is for whoever is ready, and whoever is ready will find their way there by
+                    whatever route their particular readiness requires — a wrong turn, a second-hand bookshop, a glove
+                    compartment, an attic they were searching for a spare kettle.</p>
+                <p class="rv">The Oath does not end. It extends. It passes from hand to hand the way light passes
+                    through glass and through air and through water, bending at every boundary but continuing, always
+                    continuing, toward whatever is waiting in the dark for something to illuminate it.</p>
+                <p class="rv">Elara Voss lived to eighty-one. In the last years she made maps of small things: the walk
+                    to the baker's, the path through the park, the room where she read in the afternoons when the light
+                    came in at just the angle that made everything look like a discovery. Small maps. Made with the
+                    Pelikan that never ran out of ink, in the hand she had trained for forty years and then, finally,
+                    given permission to use for something true.</p>
+                <p class="rv">She left them all to Beatriz, who had always understood her mother better than her mother
+                    knew, and who kept them framed on a wall in a room she called, with the quiet inheritance of a woman
+                    raised by a cartographer, the geography room. On the wall beside them she hung one addition of her
+                    own: a map she had made herself, of the routes between all the things she loved, drawn carefully,
+                    with attention, with the particular mix of precision and affection that is the only instrument that
+                    ever really matters.</p>
+                <div class="ornament rv">· · · · · · ·</div>
+                <p class="rv" style="text-align:center;font-style:italic;color:var(--nd);font-size:1.05rem">The
+                    Cartographer's Oath is not a burden.<br>It is a privilege given to those who understand<br>that the
+                    world is not a fact to be recorded<br>but a conversation to be continued —<br>carefully, humbly, and
+                    with great love<br>for all the blank spaces that are still listening.</p>
+                <div class="seal rv">
+                    <div class="seal-rule"></div>
+                    <span class="seal-word">— The End —</span>
+                    <div class="seal-rule"></div>
+                    <p
+                        style="font-family:'EB Garamond',serif;font-size:.73rem;letter-spacing:.28em;color:var(--nd);margin-top:1.2rem;text-transform:uppercase">
+                        The Last Cartographer — Complete Edition</p>
+                    <p
+                        style="font-family:'EB Garamond',serif;font-size:.7rem;color:rgba(138,114,85,.5);margin-top:.4rem;letter-spacing:.1em">
+                        Eighteen Chapters &amp; an Epilogue</p>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /story -->
+
+    <!-- ══ NAV BAR ══ -->
+    <nav id="navbar">
+        <button class="nb-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button>
+        <div class="nb-center">
+            <button class="nb-toc-btn" onclick="showTOCFromStory()">≡ Contents</button>
+            <div class="nb-progress" id="nbProg">Chapter I of XVIII</div>
+            <div class="nb-title" id="nbTitle">The Map That Breathed</div>
+        </div>
+        <button class="nb-btn" id="nextBtn" onclick="navigate(1)">Next →</button>
+    </nav>
+
+    <script>
+        // Chapters
+        const CHS = [
+            { id: 'pg0', label: 'Chapter I of XVIII', title: 'The Map That Breathed' },
+            { id: 'pg1', label: 'Chapter II of XVIII', title: 'What Tomás Knew' },
+            { id: 'pg2', label: 'Chapter III of XVIII', title: 'The Professor and the Oath' },
+            { id: 'pg3', label: 'Chapter IV of XVIII', title: 'Preparations for an Impossible Journey' },
+            { id: 'pg4', label: 'Chapter V of XVIII', title: 'The Sea Between Here and There' },
+            { id: 'pg5', label: 'Chapter VI of XVIII', title: 'The Isle of Unmade Things' },
+            { id: 'pg6', label: 'Chapter VII of XVIII', title: 'What the Map Required' },
+            { id: 'pg7', label: 'Chapter VIII of XVIII', title: 'The Morning After Everything' },
+            { id: 'pg8', label: 'Chapter IX of XVIII', title: 'Declan of Galway' },
+            { id: 'pg9', label: 'Chapter X of XVIII', title: 'The Woman in the Library' },
+            { id: 'pg10', label: 'Chapter XI of XVIII', title: "Mune's Confession" },
+            { id: 'pg11', label: 'Chapter XII of XVIII', title: 'The Keeper of the Lighthouse' },
+            { id: 'pg12', label: 'Chapter XIII of XVIII', title: "The Guild That Isn't" },
+            { id: 'pg13', label: 'Chapter XIV of XVIII', title: 'What the Island Remembers' },
+            { id: 'pg14', label: 'Chapter XV of XVIII', title: "Elara's Return" },
+            { id: 'pg15', label: 'Chapter XVI of XVIII', title: 'The Gathering of Cartographers' },
+            { id: 'pg16', label: 'Chapter XVII of XVIII', title: 'What Mune Saw at the End' },
+            { id: 'pg17', label: 'Chapter XVIII & Epilogue', title: 'The Map of All Maps' },
+        ];
+        let cur = 0;
+
+        // Build TOC
+        const tocList = document.getElementById('toc-list');
+        CHS.forEach((c, i) => {
+            const div = document.createElement('div');
+            div.className = 'toc-item';
+            div.innerHTML = `<span class="toc-num">Ch. ${toRoman(i + 1)}</span><span class="toc-ch-title">${c.title}</span>`;
+            div.onclick = () => jumpTo(i);
+            tocList.appendChild(div);
+        });
+
+        function toRoman(n) {
+            const v = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+            const s = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+            let r = ''; for (let i = 0; i < v.length; i++)while (n >= v[i]) { r += s[i]; n -= v[i]; } return r;
+        }
+
+        // Stars
+        const sc = document.getElementById('stars');
+        for (let i = 0; i < 200; i++) {
+            const s = document.createElement('div'); s.className = 'star';
+            const sz = Math.random() * 2.4 + .3;
+            s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random() * 100}%;left:${Math.random() * 100}%;--d:${(Math.random() * 4 + 1.5).toFixed(1)}s;--delay:-${(Math.random() * 5).toFixed(1)}s;--lo:${(Math.random() * .12 + .03).toFixed(2)};--hi:${(Math.random() * .55 + .3).toFixed(2)}`;
+            sc.appendChild(s);
+        }
+
+        function showTOC() {
+            document.getElementById('cover').style.display = 'none';
+            document.getElementById('toc-screen').classList.add('show');
+        }
+        function showTOCFromStory() {
+            document.getElementById('story').style.display = 'none';
+            document.getElementById('navbar').classList.remove('show');
+            document.getElementById('toc-screen').classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'auto' });
+        }
+        function startReading() {
+            document.getElementById('toc-screen').classList.remove('show');
+            document.getElementById('story').style.display = 'block';
+            document.getElementById('navbar').classList.add('show');
+            showChapter(cur === 0 ? 0 : cur);
+            window.addEventListener('scroll', onScroll, { passive: true });
+        }
+        function jumpTo(idx) {
+            document.getElementById('toc-screen').classList.remove('show');
+            document.getElementById('story').style.display = 'block';
+            document.getElementById('navbar').classList.add('show');
+            showChapter(idx);
+            if (!window._scrollBound) {
+                window.addEventListener('scroll', onScroll, { passive: true });
+                window._scrollBound = true;
+            }
+        }
+        function showChapter(idx) {
+            CHS.forEach((c, i) => { document.getElementById(c.id).style.display = i === idx ? 'block' : 'none' });
+            cur = idx;
+            document.getElementById('nbProg').textContent = CHS[idx].label;
+            document.getElementById('nbTitle').textContent = CHS[idx].title;
+            document.getElementById('prevBtn').disabled = idx === 0;
+            document.getElementById('nextBtn').disabled = idx === CHS.length - 1;
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            document.getElementById('progress-bar').style.width = '0%';
+            setTimeout(() => activateReveals(CHS[idx].id), 80);
+        }
+        function navigate(dir) { const n = cur + dir; if (n >= 0 && n < CHS.length) showChapter(n); }
+        function activateReveals(pid) {
+            const els = document.querySelectorAll('#' + pid + ' .rv');
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
+            }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+            els.forEach(el => obs.observe(el));
+        }
+        function onScroll() {
+            const d = document.documentElement;
+            const pct = d.scrollHeight - d.clientHeight > 0 ? Math.min(100, (d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100) : 0;
+            document.getElementById('progress-bar').style.width = pct + '%';
+        }
+    </script>
+</body>
+
+</html>
